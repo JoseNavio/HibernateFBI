@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.navio.hibernate.fbi</groupId>
+    <artifactId>HibernateFBI</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <!--MySQL-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+        <!--Jaxb-->
+<!--        <dependency>-->
+<!--            <groupId>no.digipost.jaxb</groupId>-->
+<!--            <artifactId>jaxb2-jackson-helper</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.andromda.thirdparty.jaxb2_commons</groupId>-->
+<!--            <artifactId>xml-element-wrapper</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>javax.xml.bind</groupId>-->
+<!--            <artifactId>jaxb-api</artifactId>-->
+<!--            <version>2.4.0-b180830.0359</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.sun.xml.bind</groupId>-->
+<!--            <artifactId>jaxb-impl</artifactId>-->
+<!--            <version>2.3.3</version>-->
+<!--            <scope>runtime</scope>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash;JSON&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.google.code.gson</groupId>-->
+<!--            <artifactId>gson</artifactId>-->
+<!--            <version>2.10.1</version>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash;Mapping SQL to Java objects&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.ibatis</groupId>-->
+<!--            <artifactId>ibatis-core</artifactId>-->
+<!--            <version>3.0</version>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash;Other&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>net.sf.xmldb-org</groupId>-->
+<!--            <artifactId>xmldb-api</artifactId>-->
+<!--            <version>1.7.0</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>xmldb</groupId>-->
+<!--            <artifactId>xmldb-api</artifactId>-->
+<!--            <version>20021118</version>-->
+<!--        </dependency>-->
+    </dependencies>
+
+</project>

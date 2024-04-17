@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DatosFederales xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="sospechosos.xsd">
+	<Sospechoso ficha="AKK901" estado="NV" nombreEstado="NEVADA">
+		<Nombre>Eric Flanagan</Nombre>
+		<Sexo>Varón</Sexo>
+		<Altura>180</Altura>
+		<Peso>85</Peso>
+		<FechaNacimiento>1952/03/18</FechaNacimiento>
+		<Foto>eric-flanagan</Foto>
+		<Delito>
+			<Fecha>2019-05-12T13:45:00</Fecha>
+			<Tipo>Asesinato</Tipo>
+			<Observaciones><![CDATA[Buscado por las autoridades por asesinato en atraco en banco]]></Observaciones>
+		</Delito>
+	</Sospechoso>
+	<Sospechoso ficha="LLF455" estado="TX" nombreEstado="TEXAS">
+		<Nombre>Jhon Carpenter</Nombre>
+		<Sexo>Varón</Sexo>
+		<Altura>172</Altura>
+		<Peso>78</Peso>
+		<FechaNacimiento>1968/10/03</FechaNacimiento>
+		<Foto>jhon-carpenter</Foto>
+		<Delito>
+			<Fecha>2005-03-11T00:45:00</Fecha>
+			<Tipo>Asesinato</Tipo>
+			<Observaciones><![CDATA[Sospechoso del asesinato de varias prostitutas en el área de El Paso en el bienio 2005-2006]]></Observaciones>
+		</Delito>
+	</Sospechoso>
+</DatosFederales>

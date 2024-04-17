@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="DatosFederales">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="Sospechoso"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Sospechoso">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Nombre"/>
+        <xs:element ref="Sexo"/>
+        <xs:element ref="Altura"/>
+        <xs:element ref="Peso"/>
+        <xs:element ref="FechaNacimiento"/>
+        <xs:element minOccurs="0" ref="Foto"/>
+        <xs:element ref="Delito"/>
+      </xs:sequence>
+      <xs:attribute name="estado" use="required" type="xs:NCName"/>
+      <xs:attribute name="ficha" use="required" type="Ficha"/>
+      <xs:attribute name="nombreEstado" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Nombre" type="xs:string"/>
+  <xs:element name="Sexo" type="xs:NCName"/>
+  <xs:element name="Altura" type="xs:integer"/>
+  <xs:element name="Peso" type="xs:integer"/>
+  <xs:element name="FechaNacimiento" type="xs:string"/>
+  <xs:element name="Delito">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="Fecha"/>
+        <xs:element ref="Tipo"/>
+        <xs:element ref="Observaciones"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="Ficha">
+    <xs:restriction base="xs:NCName">
+      <xs:pattern value="[A-Z]{3}\d{3}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Fecha" type="xs:dateTime"/>
+  <xs:element name="Tipo" type="xs:NCName"/>
+  <xs:element name="Observaciones" type="xs:string"/>
+  <xs:element name="Foto" type="xs:NCName"/>
+</xs:schema>
