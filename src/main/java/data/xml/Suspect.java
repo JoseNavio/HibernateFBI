@@ -1,6 +1,7 @@
 package data.xml;
 
 import javax.xml.bind.annotation.*;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -14,8 +15,10 @@ public class Suspect {
 
     @XmlAttribute(name = "ficha")
     String record;
-    @XmlAttribute(name = "nombreEstado")
+    @XmlAttribute(name = "estado")
     String state;
+    @XmlAttribute(name = "nombreEstado")
+    String stateName;
     @XmlElement(name = "Nombre")
     String name;
     @XmlElement(name = "Sexo")
@@ -31,21 +34,9 @@ public class Suspect {
     String photo;
 
     @XmlElement(name = "Delito")
-    Crime crime;
+    List<Crime> crimes;
 
     public Suspect() {
-    }
-
-    public Suspect(String record, String state, String name, String sex, int height, int weight, String birthdate, String photo, Crime crime) {
-        this.record = record;
-        this.state = state;
-        this.name = name;
-        this.sex = sex;
-        this.height = height;
-        this.weight = weight;
-        this.birthdate = birthdate;
-        this.photo = photo;
-        this.crime = crime;
     }
 
     public String getRecord() {
@@ -60,8 +51,16 @@ public class Suspect {
         return state;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setStateName(String stateName) {
+        this.stateName = stateName;
+    }
+
+    public String getStateName() {
+        return stateName;
+    }
+
+    public void setState(String stateName) {
+        this.stateName = stateName;
     }
 
     public String getName() {
@@ -73,7 +72,14 @@ public class Suspect {
     }
 
     public String getSex() {
-        return sex;
+        switch (sex) {
+            case "Varón":
+                return "V";
+            case "Hembra":
+                return "H";
+            default:
+                return "I";
+        }
     }
 
     public void setSex(String sex) {
@@ -112,12 +118,16 @@ public class Suspect {
         this.photo = photo;
     }
 
-    public Crime getCrime() {
-        return crime;
+    public List<Crime> getCrimes() {
+        return crimes;
     }
 
-    public void setCrime(Crime crime) {
-        this.crime = crime;
+    public void setCrimes(List<Crime> crimes) {
+        this.crimes = crimes;
+    }
+
+    public void addCrime(Crime crime) {
+        this.crimes.add(crime);
     }
 
     @Override
@@ -125,12 +135,13 @@ public class Suspect {
         return "Suspect{" +
                 "record='" + record + '\'' +
                 ", state='" + state + '\'' +
+                ", stateName='" + stateName + '\'' +
                 ", name='" + name + '\'' +
-                ", sex='" + sex + '\'' +
+                ", sex='" + getSex() + '\'' +
                 ", height=" + height +
                 ", weight=" + weight +
                 ", birthdate='" + birthdate + '\n' +
-                "Crime=" + crime +
+                "Crime=" + crimes +
                 '}';
     }
 
@@ -147,3 +158,4 @@ public class Suspect {
         return Objects.hash(record);
     }
 }
+

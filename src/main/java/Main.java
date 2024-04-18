@@ -1,8 +1,16 @@
+import connection.ConnectionHibernate;
 import connection.ConnectionMySQL;
+import data.hibernate.Delito;
+import data.hibernate.Estado;
+import data.hibernate.Sospechoso;
+import data.xml.Crime;
 import data.xml.FederalData;
 import data.xml.Suspect;
 import org.apache.ibatis.jdbc.ScriptRunner;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import util.Constants;
+import util.Utils;
 import util.XMLManager;
 
 import java.io.FileNotFoundException;
@@ -22,13 +30,15 @@ import java.util.*;
 public class Main {
 
     private static Connection connectionMySQL;
+    public static Session session = null;
+    public static Transaction transaction = null;
 
     public static void main(String[] args) {
 
         //Generate a connection to the database
         connectionMySQL = ConnectionMySQL.connect();
 
-//        resetDatabase();
+        resetDatabase();
 
         //Get the route to the valid XML files
         List<String> validXMLs = validateXMLs();
@@ -41,15 +51,29 @@ public class Main {
 
                 //Read the XML file
                 FederalData federalData = XMLManager.readFBIXML(xmlRoute);
+
                 //Add the suspects to the set to avoid duplicates (Fichas son idénticas...)
-                if (!federalData.getSuspects().isEmpty()){
-                    uniqueSuspects.addAll(federalData.getSuspects());
+                if (!federalData.getSuspects().isEmpty()) {
+                    for (Suspect newSuspect : federalData.getSuspects()) {
+                        boolean found = false;
+                        //Cause a suspect can have multiple crimes...
+                        for (Suspect existingSuspect : uniqueSuspects) {
+                            if (existingSuspect.getRecord().equals(newSuspect.getRecord())) {
+                                existingSuspect.getCrimes().addAll(newSuspect.getCrimes());
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            uniqueSuspects.add(newSuspect);
+                        }
+                    }
                 }
             }
 
             //Add the photos to the suspects
-            for(Suspect suspect : uniqueSuspects){
-                suspect.setPhoto(imageToBase64(suspect.getPhoto()));
+            for (Suspect suspect : uniqueSuspects) {
+                suspect.setPhoto(Utils.imageToBase64(suspect.getPhoto()));
             }
 
             //todo Just for testing purposes
@@ -57,9 +81,12 @@ public class Main {
                 System.out.println(suspect);
                 System.out.println("--------------------------------------------------");
             }
+
+            insertSuspects(uniqueSuspects);
         }
     }
 
+    //1.
     //Runs the FBI.sql script to reset the database
     private static void resetDatabase() {
 
@@ -85,15 +112,45 @@ public class Main {
         return validXMLs;
     }
 
-    private static String imageToBase64(String imageName) {
+    private static void insertSuspects(Set<Suspect> suspects) {
 
-        String imagePath = "src/main/resources/" + imageName + ".png";
+        session = ConnectionHibernate.getSessionFactory().openSession();
+        transaction = session.beginTransaction();
 
-        try {
-            byte[] imageBytes = Files.readAllBytes(Paths.get(imagePath));
-            return Base64.getEncoder().encodeToString(imageBytes);
-        } catch ( IOException e) {
-            throw new RuntimeException(e);
+        for (Suspect suspect : suspects) {
+            Sospechoso sospechoso = new Sospechoso();
+            Estado estado = new Estado();
+            sospechoso.setFicha(suspect.getRecord());
+            estado.setEstado(suspect.getState());
+            estado.setNombreEstado(suspect.getStateName());
+            sospechoso.setEstado(estado);
+            sospechoso.setNombre(suspect.getName());
+            sospechoso.setSexo(suspect.getSex());
+            sospechoso.setAltura(String.valueOf(suspect.getHeight()));
+            sospechoso.setPeso(String.valueOf(suspect.getWeight()));
+            sospechoso.setFechaNacimiento(suspect.getBirthdate());
+            sospechoso.setFoto(suspect.getPhoto());
+            List<Delito> delitos = new ArrayList<>();
+            for (Crime crime : suspect.getCrimes()) {
+                Delito delito = new Delito();
+                delito.setToken(Utils.generateToken(suspect.getRecord() + crime.getDate()));
+                delito.setFicha(sospechoso);
+                delito.setFecha(crime.getDate());
+                delito.setTipo(crime.getType());
+                delito.setObservaciones(crime.getObservation());
+                delitos.add(delito);
+            }
+            sospechoso.setDelitos(delitos);
+
+            for (Delito delito : delitos) {
+                session.persist(delito);
+            }
+
+            session.persist(sospechoso);
+            session.persist(estado);
         }
+
+        transaction.commit();
     }
+
 }

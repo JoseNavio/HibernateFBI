@@ -1,5 +1,6 @@
 package util;
 
+import data.xml.Crime;
 import data.xml.FederalData;
 import data.xml.Suspect;
 import org.xml.sax.SAXException;
