@@ -39,51 +39,20 @@
             <artifactId>jaxb-api</artifactId>
             <version>2.4.0-b180830.0359</version>
         </dependency>
+        <!--Bind XML & Java-->
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.3.3</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!--Mapping SQL to Java objects-->
+        <dependency>
+            <groupId>org.apache.ibatis</groupId>
+            <artifactId>ibatis-core</artifactId>
+            <version>3.0</version>
+        </dependency>
 
-
-
-
-                <dependency>
-                    <groupId>no.digipost.jaxb</groupId>
-                    <artifactId>jaxb2-jackson-helper</artifactId>
-                    <version>1.0</version>
-                </dependency>
-
-                <dependency>
-                    <groupId>org.andromda.thirdparty.jaxb2_commons</groupId>
-                    <artifactId>xml-element-wrapper</artifactId>
-                    <version>1.0</version>
-                </dependency>
-
-                <dependency>
-                    <groupId>com.sun.xml.bind</groupId>
-                    <artifactId>jaxb-impl</artifactId>
-                    <version>2.3.3</version>
-                    <scope>runtime</scope>
-                </dependency>
-                <!--JSON-->
-                <dependency>
-                    <groupId>com.google.code.gson</groupId>
-                    <artifactId>gson</artifactId>
-                    <version>2.10.1</version>
-                </dependency>
-                <!--Mapping SQL to Java objects-->
-                <dependency>
-                    <groupId>org.apache.ibatis</groupId>
-                    <artifactId>ibatis-core</artifactId>
-                    <version>3.0</version>
-                </dependency>
-                <!--Other-->
-                <dependency>
-                    <groupId>net.sf.xmldb-org</groupId>
-                    <artifactId>xmldb-api</artifactId>
-                    <version>1.7.0</version>
-                </dependency>
-                <dependency>
-                    <groupId>xmldb</groupId>
-                    <artifactId>xmldb-api</artifactId>
-                    <version>20021118</version>
-                </dependency>
     </dependencies>
 
 </project>

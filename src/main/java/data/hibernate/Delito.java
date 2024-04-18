@@ -28,18 +28,6 @@ public class Delito {
     public Delito() {
     }
 
-    public Delito(String token, Sospechoso ficha, String fecha, String observaciones) {
-        this.token = token;
-        this.ficha = ficha;
-        this.fecha = fecha;
-        this.observaciones = observaciones;
-    }
-
-    public Delito(Sospechoso ficha, String fecha, String observaciones) {
-        this.ficha = ficha;
-        this.fecha = fecha;
-        this.observaciones = observaciones;
-    }
 
     public String getToken() {
         return token;
@@ -80,4 +68,15 @@ public class Delito {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
+
+    @Override
+    public String toString() {
+        return "Delito{" +
+                "token='" + token + '\'' +
+                ", fecha='" + fecha + '\'' +
+                ", tipo='" + tipo + '\'' +
+                ", observaciones='" + observaciones + '\'' +
+                '}';
+    }
 }
+

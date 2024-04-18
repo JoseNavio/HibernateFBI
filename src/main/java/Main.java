@@ -15,9 +15,6 @@ import util.XMLManager;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.*;
 
@@ -83,6 +80,10 @@ public class Main {
             }
 
             insertSuspects(uniqueSuspects);
+
+            insertNewCrime();
+
+            showSuspectGivenItsRecord("LLF455");
         }
     }
 
@@ -152,5 +153,44 @@ public class Main {
 
         transaction.commit();
     }
+    //2.
+    //Insert a new crime
+    private static void insertNewCrime() {
+        transaction = session.beginTransaction();
 
+        Sospechoso sospechoso = (Sospechoso) session.createQuery("FROM Sospechoso WHERE ficha = :ficha").setParameter("ficha", "LLF455").uniqueResult();
+
+        sospechoso.setEstado(new Estado("CA", "California"));
+
+        Delito delito = new Delito();
+        delito.setFicha(sospechoso);
+        delito.setTipo("Robo de vehículos");
+        delito.setFecha("2024-05-01T13:45:00");
+        delito.setObservaciones("Realizó el robo de vehículos de alta game en la ciudad de Los Angeles.");
+        delito.setToken(Utils.generateToken(delito.getTipo() + delito.getFecha()));
+        session.persist(sospechoso.getEstado());
+        session.persist(delito);
+        session.merge(sospechoso);
+        session.getTransaction().commit();
+    }
+    //3.
+    //Show the suspect given its record
+    private static void showSuspectGivenItsRecord(String record) {
+
+        Sospechoso sospechoso = (Sospechoso) session.createQuery("FROM Sospechoso WHERE ficha = :ficha").setParameter("ficha", record).uniqueResult();
+
+        if (sospechoso != null) {
+            List<Delito> delitos = session.createQuery("FROM Delito WHERE ficha = :ficha").setParameter("ficha", sospechoso).list();
+            sospechoso.setDelitos(delitos);
+            System.out.println(sospechoso);
+        } else {
+            // If the Sospechoso does not exist, get all Sospechoso objects
+            List<Sospechoso> sospechosos = session.createQuery("FROM Sospechoso").list();
+            for (Sospechoso s : sospechosos) {
+                List<Delito> delitos = session.createQuery("FROM Delito WHERE ficha = :ficha").setParameter("ficha", s).list();
+                s.setDelitos(delitos);
+                System.out.println(s);
+            }
+        }
+    }
 }

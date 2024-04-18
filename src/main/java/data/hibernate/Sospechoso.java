@@ -43,18 +43,6 @@ public class Sospechoso {
     public Sospechoso() {
     }
 
-    public Sospechoso(String ficha, Estado estado, String nombre, String sexo, String altura, String peso, String fechaNacimiento, String foto, List<Delito> delitos) {
-        this.ficha = ficha;
-        this.estado = estado;
-        this.nombre = nombre;
-        this.sexo = sexo;
-        this.altura = altura;
-        this.peso = peso;
-        this.fechaNacimiento = fechaNacimiento;
-        this.foto = foto;
-        this.delitos = delitos;
-    }
-
     public String getFicha() {
         return ficha;
     }
@@ -125,6 +113,29 @@ public class Sospechoso {
 
     public void setDelitos(List<Delito> delitos) {
         this.delitos = delitos;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\t" + nombre.toUpperCase() + "\n");
+        sb.append("\t-------------\n");
+        sb.append("\tFicha: ").append(ficha).append("\n");
+        sb.append("\tEstado: ").append(estado.nombreEstado).append("\n");
+        sb.append("\tSexo: ").append(sexo).append("\n");
+        sb.append("\tAltura: ").append(altura).append("\n");
+        sb.append("\tPeso: ").append(peso).append("\n");
+        sb.append("\tFecha de Nacimiento: ").append(fechaNacimiento).append("\n");
+        sb.append("\t-------------\n");
+        sb.append("\tCrimenes:\n");
+        for (Delito delito : delitos) {
+            sb.append("\t\t\t-------------\n");
+            sb.append("\t\t\tToken: ").append(delito.getToken()).append("\n");
+            sb.append("\t\t\tFecha: ").append(delito.getFecha()).append("\n");
+            sb.append("\t\t\tTipo: ").append(delito.getTipo()).append("\n");
+            sb.append("\t\t\tObservaciones: ").append(delito.getObservaciones()).append("\n");
+        }
+        return sb.toString();
     }
 }
 
